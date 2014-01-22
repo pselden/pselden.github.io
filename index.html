@@ -3,43 +3,51 @@
 <head>
     <style>
         body { margin: 0; padding: 0; }
-        .center-container {
-            background: #2e5f3e;
-            color: #4fa46b;
-            width: 100%;
-            height: 400px;
-            clear: both;
-        }
-        .center-container .absolute-centered {
-            height: 50%;
-            width: 50%;
-            overflow: auto;
-            margin: auto;
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            background: #4fa46b;
-            color: #FFF;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .center-container a {
-            color: #FFF;
-        }
+        .ageGate { padding: 20px; text-align: center; }
+        .ageGate form { margin-top: 20px; }
+        .ageGate form button { margin-top: 10px; }
 
     </style>
 </head>
 <body>
-    <div class="center-container">
-        <div class="absolute-centered">
-            <a href=?result=success>Success</a>
-            <a href=http://www.google.com>Google</a>
-            <a href=?result=failure>Failure</a>
-        </div>
+    <div class="ageGate">
+        <h1>Please enter your date of birth to continue.</h1>
+        <form method="POST" action="/">
+            <input type="datetime" name="birthDate" placeholder="mm/dd/yyyy">
+            <div>
+                <button type="submit">Continue</button>
+            </div>
+        </form>
     </div>
+    <script>
+        (function(){
+            function getAge(birthDate) {
+                var today = new Date();
+                var age = today.getFullYear() - birthDate.getFullYear();
+                var m = today.getMonth() - birthDate.getMonth();
+                if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                    age--;
+                }
+                return age;
+            }
+
+            function appendQs(url, key, val){
+                var prefix = url.indexOf('?') === -1 ? '?' : '&';
+                return url + prefix + encodeURIComponent(key) + "=" + encodeURIComponent(val);
+            }
+
+            var gate = document.querySelector('.ageGate form');
+            gate.addEventListener("submit", function(e){
+                e.preventDefault();
+                e.stopPropagation();
+                var form = e.target;
+                var birthDate = new Date(form.birthDate.value);
+                var age = getAge(birthDate);
+                var result = age < 21 ? 'failure' : 'success';
+                window.location = appendQs(window.location.href, 'result', result);
+            });
+        })();
+    </script>
 </body>
 </html>
 
