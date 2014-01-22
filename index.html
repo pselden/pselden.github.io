@@ -3,8 +3,8 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        body { margin: 0; padding: 0; }
-        .ageGate { padding: 20px; text-align: center; }
+        body { margin: 0; padding: 0; background: url('http://www.budlighthotel.com/assets/content-gate/age-gate-bg-mobile-5bbabc60a53c4030739d1afe12e4275e.jpg') no-repeat; background-size: cover;}
+        .ageGate { padding: 20px; text-align: center; margin-top: 175px; }
         .ageGate form { margin-top: 20px; }
         .ageGate form button { margin-top: 10px; }
 
@@ -12,11 +12,10 @@
 </head>
 <body>
     <div class="ageGate">
-        <h1>Please enter your date of birth to continue.</h1>
         <form method="POST" action="/">
             <input type="date" name="birthDate" placeholder="mm/dd/yyyy">
             <div>
-                <button type="submit">Continue</button>
+                <button type="submit" disabled>Continue</button>
             </div>
         </form>
     </div>
@@ -32,12 +31,17 @@
                 return age;
             }
 
+
             function appendQs(url, key, val){
                 var prefix = url.indexOf('?') === -1 ? '?' : '&';
                 return url + prefix + encodeURIComponent(key) + "=" + encodeURIComponent(val);
             }
 
             var gate = document.querySelector('.ageGate form');
+            gate.birthDate.addEventListener("change", function(e){
+                gate.querySelector("[type=submit]").disabled = isNaN(new Date(e.target.value));
+            });
+
             gate.addEventListener("submit", function(e){
                 e.preventDefault();
                 e.stopPropagation();
