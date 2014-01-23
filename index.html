@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
 <meta property="og:image" content="http://cdn3.axs.com/axs/splash/staples/cyberM_fb.jpg" />
 <script type="text/javascript" src="http://ftp1.axsops.com/larche/common/jquery.js"></script>
+
 <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
 <style type="text/css">
 *, *:before, *:after {
@@ -71,18 +72,22 @@ form input::-webkit-inner-spin-button{
 
 form input::-webkit-input-placeholder {
     color: #FFF;
+    text-align: center;
 }
 
 form input:-moz-placeholder { /* Firefox 18- */
     color: #FFF;
+    text-align: center;
 }
 
 form input::-moz-placeholder {  /* Firefox 19+ */
     color: #FFF;
+    text-align: center;
 }
 
 form input:-ms-input-placeholder {
     color: #FFF;
+    text-align: center;
 }
 
 form input:first-child {
@@ -116,7 +121,7 @@ button:before {
     background: rgba(0,0,0,.2);
 }
 
-[disabled="disabled"] {
+[disabled] {
     opacity: .8;
 }
 
@@ -280,11 +285,6 @@ body.modal-container-open {
     box-shadow: 0 0 25px -2px #230000;
 }
 
-button[disabled] {
-    opacity: 0.5;
-}
-
-
 </style>
 <title>Age Verification</title>
 </head>
@@ -320,6 +320,14 @@ button[disabled] {
         </div>
     </div>
 <script type="text/javascript">
+    /*! jquery.placeholder.js | https://github.com/diy/jquery-placeholder | Apache License (v2) */
+    (function(f){var j="placeholder"in document.createElement("input"),h="-moz-box-sizing -webkit-box-sizing box-sizing padding-top padding-right padding-bottom padding-left margin-top margin-right margin-bottom margin-left border-top-width border-right-width border-bottom-width border-left-width line-height font-size font-family width height top left right bottom".split(" ");f.fn.placeholder=function(g){var k=this;g=g||{};if(j&&!g.force)return this;window.setTimeout(function(){k.each(function(){var e=
+            this.tagName.toLowerCase();if("input"===e||"textarea"===e)a:{var b,d,a=f(this),c;try{b=a[0].getAttributeNode("placeholder");if(!b)break a;d=a[0].getAttribute("placeholder");if(!d||!d.length)break a;a[0].setAttribute("placeholder","");a.data("placeholder",d)}catch(g){break a}e={};for(b=0;b<h.length;b++)e[h[b]]=a.css(h[b]);b=parseInt(a.css("z-index"),10);if(isNaN(b)||!b)b=1;c=f("<span>").addClass("placeholder").html(d);c.css(e);c.css({cursor:a.css("cursor")||"text",display:"block",position:"absolute",
+        overflow:"hidden","z-index":b+1,background:"none","border-top-style":"solid","border-right-style":"solid","border-bottom-style":"solid","border-left-style":"solid","border-top-color":"transparent","border-right-color":"transparent","border-bottom-color":"transparent","border-left-color":"transparent"});c.insertBefore(a);e=a.offset().top-c.offset().top;d=parseInt(c.css("margin-top"));isNaN(d)&&(d=0);c.css("margin-top",d+e);c.on("mousedown",function(){a.is(":enabled")&&window.setTimeout(function(){a.trigger("focus")},
+            0)});a.on("focus.placeholder",function(){c.hide()});a.on("blur.placeholder",function(){c.toggle(!f.trim(a.val()).length)});a[0].onpropertychange=function(){"value"===event.propertyName&&a.trigger("focus.placeholder")};a.trigger("blur.placeholder")}})},0);return this}})(jQuery);
+
+</script>
+<script type="text/javascript">
     $(function(){
         var $form = $('#age-gate-form'),
                 $submit = $form.find('button[type=submit]'),
@@ -341,10 +349,17 @@ button[disabled] {
 
         $form.find('input[type=number]').on('blur change', onChange).on('keypress', validateNumberInput);
         setInterval(onChange, 500); // for browsers that do not support change event, poll for changes
+        $('input[placeholder]').placeholder({force:true}); // android webview can't center placeholder text, so just force it
 
         function onChange(){
             var birthDate = getBirthDate();
-            $submit.prop('disabled', !birthDate);
+            if(birthDate){
+                $submit.addClass
+                $submit.prop('disabled', false);
+            } else {
+                $submit.prop('disabled', true);
+            }
+
         }
 
         // checks whether the input is a valid number key or backspace
