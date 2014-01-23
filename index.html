@@ -299,13 +299,13 @@ body.modal-container-open {
     <form id="age-gate-form" method="post" name="age-gate-form">
         <div>
             <div class="form-input">
-                <input id="month" name="month" type="number" placeholder="MM" maxlength="2" min="1" max="12" pattern="[0-9]{2}" required>
+                <input id="month" name="month" type="number" placeholder="MM" maxlength="2" min="1" max="12" pattern="[0-9]{2}" autocomplete="off" required>
             </div>
             <div class="form-input">
-                <input id="day" name="day" type="number" placeholder="DD" maxlength="2" max="31" min="1" pattern="[0-9]{2}" required>
+                <input id="day" name="day" type="number" placeholder="DD" maxlength="2" max="31" min="1" pattern="[0-9]{2}" autocomplete="off" required>
             </div>
             <div class="form-input">
-                <input id="year" name="year" type="number" placeholder="YYYY" maxlength="4" max="9999" min="1900" pattern="[0-9]{4}" required>
+                <input id="year" name="year" type="number" placeholder="YYYY" maxlength="4" max="9999" min="1900" pattern="[0-9]{4}" autocomplete="off" required>
             </div>
         </div>
         <button type="submit" disabled data-text-disabled="Enter your birthdate" data-text-enabled="Enter">Enter your birthdate</button>
