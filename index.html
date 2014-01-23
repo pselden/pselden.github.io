@@ -354,7 +354,7 @@ body.modal-container-open {
                 }
             });
 
-            $form.find('input[type=number]').on('focus click', openDatePicker).on('blur change', onChange).on('keypress', validateNumberInput);
+            $form.find('input[type=number]').on('focus', openDatePicker).on('blur change', onChange).on('keypress', validateNumberInput);
             setInterval(onChange, 500); // for browsers that do not support change event, poll for changes
             if(isDateSupported){
                 setInterval(onDatePickerChange, 500);
