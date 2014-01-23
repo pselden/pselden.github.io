@@ -1,26 +1,344 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        body { margin: 0; padding: 0; background: url('http://www.budlighthotel.com/assets/content-gate/age-gate-bg-mobile-5bbabc60a53c4030739d1afe12e4275e.jpg') no-repeat; background-size: cover;}
-        .ageGate { padding: 20px; text-align: center; margin-top: 175px; }
-        .ageGate form { margin-top: 20px; }
-        .ageGate form button { margin-top: 10px; }
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+<meta property="og:image" content="http://cdn3.axs.com/axs/splash/staples/cyberM_fb.jpg" />
+<script type="text/javascript" src="http://ftp1.axsops.com/larche/common/jquery.js"></script>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+<style type="text/css">
+*, *:before, *:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+html {
+    height: 100%;
+    position: relative;
+}
+body {
+    font-family: 'Fjalla One', Arial, sans-serif;
+    padding: 200px 10px 40px 10px;
+    background: #11112C url('https://s3.amazonaws.com/uploads.hipchat.com/30795/203735/SDhASyMLgJdxSDw/bg-budweiser-age-verification.jpg') 0 -50px no-repeat;
+    background-size: 100% auto;
+    text-align: center;
+    font-size: 10px;
+    color: #fff;
+    position: relative;
+}
+@media (min-width:340px) {
+    body {padding-top: 240px}
+}
+@media (min-width: 760px) {
+    body {
+        padding-top: 570px;
+    }
+}
 
-    </style>
+.pseudo-date-picker-container {
+    text-align: center;
+}
+.pseudo-date-picker-container .pseudo-date-picker {
+    display: inline-block;
+    padding: .2em .3em .1em;
+    background: rgba(0,0,0,.3);
+    box-shadow: inset 0 15px 10px -15px rgba(0, 0, 0, 0.2);
+    font-size: 30px;
+    color: #fff;
+    line-height: 1;
+    margin-left: .2em;
+}
+.pseudo-date-picker-container .pseudo-date-picker:first-child {
+    margin-left: 0;
+}
+
+
+button {
+    margin: 1em 0;
+    border: 1px solid #3a2156;
+    appearance: none;
+    background: #502d77;
+    box-shadow: 0 0 25px -2px #130b1d;
+    padding: .5em 1em;
+    color: #f4f4f4;
+    text-transform: uppercase;
+    text-shadow: 0 0 3px #230000;
+    font-style: italic;
+    font-size: 18px;
+    position: relative;
+    overflow: hidden;
+}
+button:before {
+    content: '';
+    -moz-transform: rotate(-9deg) translate(0,.3em);
+    -webkit-transform: rotate(-9deg) translate(0,.3em);
+    position: absolute;
+    top: .8em;
+    right: -3em;
+    bottom: -3em;
+    left: -3em;
+    background: rgba(0,0,0,.2);
+}
+
+[disabled="disabled"] {
+    opacity: .8;
+}
+
+#date-picker {
+    opacity: 0;
+    position: fixed;
+    top: -99em;
+}
+
+.legal-text {
+    margin-top: 1em;
+}
+.legal-text a, .legal-text a:visited, .legal-text a:hover {
+    color: #fff;
+}
+.legal-text .heading{
+    font-size: 16px;
+}
+.legal-text p{
+    font-family: arial;
+    opacity: .4;
+    margin: .2em 0;
+}
+
+#not-old-enough {
+    margin-bottom: 0;
+}
+
+
+body.modal-container-open {
+    overflow: hidden;
+}
+
+.modal-container {
+    z-index: 1000;
+    padding: 40px;
+    overflow-y: scroll;
+    display: none;
+}
+.modal-container,
+.modal-container:before {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+.modal-container:before {
+    content: '';
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+}
+
+.modal {
+    max-width: 600px;
+    padding: 25px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 2px;
+    color: #000;
+    font-size: 16px;
+}
+.modal .header {
+    position: relative;
+    margin: -25px -25px 1em;
+    padding: 0.5em 25px;
+    font-size: 20px;
+    font-weight: normal;
+    text-transform: uppercase;
+    background: #ff9c00;
+    color: #fff;
+    border-radius: 2px 2px 0 0;
+}
+.modal .header a {
+    font-weight: normal;
+}
+.modal .header a,
+.modal .header a:visited {
+    color: white;
+    text-decoration: none;
+    word-break: break-word;
+}
+.modal .header a:hover {
+    color: #e6e6e6;
+    cursor: pointer;
+    text-decoration: none;
+}
+.modal .header a:active {
+    text-decoration: none;
+}
+.modal .header .sub-heading {
+    display: block;
+    margin-top: .3em;
+    font-size: .6em;
+    text-transform: none;
+}
+.modal .header .icon-close,
+.modal .header .banner .close-btn,
+.banner .modal .header .close-btn {
+    position: absolute;
+    display: block;
+    top: 6.25px;
+    right: 6.25px;
+    font-size: 16px;
+}
+.modal .header .icon-close,
+.modal .header .banner .close-btn,
+.banner .modal .header .close-btn,
+.modal .header .icon-close:visited,
+.modal .header .banner .close-btn:visited,
+.banner .modal .header .close-btn:visited {
+    color: black;
+    text-decoration: none;
+    word-break: break-word;
+}
+.modal .header .icon-close:hover,
+.modal .header .banner .close-btn:hover,
+.banner .modal .header .close-btn:hover {
+    color: black;
+    cursor: pointer;
+    text-decoration: none;
+}
+.modal .header .icon-close:active,
+.modal .header .banner .close-btn:active,
+.banner .modal .header .close-btn:active {
+    text-decoration: none;
+}
+.modal .header .icon-close,
+.modal .header .banner .close-btn,
+.banner .modal .header .close-btn,
+.modal .header .icon-close:before,
+.modal .header .banner .close-btn:before,
+.banner .modal .header .close-btn:before,
+.modal .header .icon-close:after,
+.modal .header .banner .close-btn:after,
+.banner .modal .header .close-btn:after {
+    margin: 0;
+}
+.modal.is-error .header {
+    background-color: #a80000 !important;
+}
+.modal.is-error .header .icon-close,
+.modal.is-error .header .banner .close-btn,
+.banner .modal.is-error .header .close-btn,
+.modal.is-error .header .icon-close:visited,
+.modal.is-error .header .banner .close-btn:visited,
+.banner .modal.is-error .header .close-btn:visited {
+    color: white;
+    text-decoration: none;
+    word-break: break-word;
+}
+.modal.is-error .header .icon-close:hover,
+.modal.is-error .header .banner .close-btn:hover,
+.banner .modal.is-error .header .close-btn:hover {
+    color: #e6e6e6;
+    cursor: pointer;
+    text-decoration: none;
+}
+.modal.is-error .header .icon-close:active,
+.modal.is-error .header .banner .close-btn:active,
+.banner .modal.is-error .header .close-btn:active {
+    text-decoration: none;
+}
+.modal.is-error button {
+    border: 1px solid #860101;
+    background: #a80000;
+    box-shadow: 0 0 25px -2px #230000;
+}
+
+
+</style>
+<title>Age Verification</title>
 </head>
-<body>
-    <div class="ageGate">
-        <form method="POST" action="/">
-            <input type="date" name="birthDate" placeholder="mm/dd/yyyy">
-            <div>
-                <button type="submit" disabled>Continue</button>
-            </div>
-        </form>
+<body class="modal-container-open">
+<form action="/" method="post">
+    <div class="pseudo-date-picker-container" data-paired-input="#date-picker">
+        <div class="pseudo-date-picker" data-date-code="MM">MM</div>
+        <div class="pseudo-date-picker" data-date-code="DD">DD</div>
+        <div class="pseudo-date-picker" data-date-code="YYYY">YYYY</div>
     </div>
-    <script>
-        (function(){
+
+    <button id="check-my-age" disabled="disabled">Enter your birthdate</button>
+
+
+    <div class="legal-text">
+        <div class="heading">ENJOY RESPONSIBLY</div>
+        <!--<p>Privacy Policy | Terms of Use | <a href="http://beresponsible.com/" target="_blank">BeResponsible.com</a></p>-->
+        <!--<p>No purchase necessary. Open to U.S. residents 21+. Ends 2/3/14. See Rules for details. Message & data rates may apply.  Void where prohibited. See Official Rules at <a href="http://www.budlight.com/LuckyKey/" target="_blank">www.budlight.com/LuckyKey</a> for complete details.</p>-->
+    </div>
+    <input id="date-picker" type="date" />
+</form>
+<div id="horrible-age" class="modal-container">
+    <div class="modal is-error">
+        <div class="header">Uh Oh!</div>
+        <div class="modal-content">
+            Sorry, you must be 21 years of age or older to view this content.
+            <div><button id="not-old-enough">OK :(</button></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $('.pseudo-date-picker-container').each(function(){
+            var $c = $(this),
+                    $box = $c.find('.pseudo-date-picker'),
+                    $month = $box.filter('[data-date-code="MM"]'),
+                    $day = $box.filter('[data-date-code="DD"]'),
+                    $year = $box.filter('[data-date-code="YYYY"]'),
+                    dateInput = $c.attr('data-paired-input'),
+                    $youreYoungModal = $('#horrible-age'),
+                    $btnTooYoung = $('#not-old-enough');
+
+            var $dateInput = $(dateInput),
+                    $submitButton = $('#check-my-age'), // TODO make this more specific
+                    $form = $('form'); // TODO make this more specific
+
+            $box.on('click', function(){
+                $dateInput.focus().click();
+            });
+
+            $dateInput.on('blur change', onChange);
+
+            $submitButton.on('click', function(){
+                $form.submit();
+                return false;
+            });
+
+            $form.on('submit', function(){
+                checkAge(new Date($dateInput.val()));
+                return false;
+            })
+
+            setInterval(function(){
+                onChange.call($dateInput);
+            }, 1000);
+
+            var prevValue = null;
+            function onChange(){
+                var val = $(this).val();
+                if(val !== prevValue){
+                    prevValue = val;
+                    if (val){
+                        var dateString = val.split('-');
+                        $month.html(dateString[1]);
+                        $day.html(dateString[2]);
+                        $year.html(dateString[0]);
+                        $submitButton.prop('disabled', false);
+                    }
+                    else {
+                        $month.html($month.attr('data-date-code'));
+                        $day.html($day.attr('data-date-code'));
+                        $year.html($year.attr('data-date-code'));
+                        $submitButton.prop('disabled', true);
+                    }
+                }
+            }
+
             function getAge(birthDate) {
                 var today = new Date();
                 var age = today.getFullYear() - birthDate.getFullYear();
@@ -31,29 +349,53 @@
                 return age;
             }
 
-
-            function appendQs(url, key, val){
-                var prefix = url.indexOf('?') === -1 ? '?' : '&';
-                return url + prefix + encodeURIComponent(key) + "=" + encodeURIComponent(val);
+            function parseQs(qs){
+                var result = {};
+                if(qs){
+                    $.each(qs.split('&'), function(i, s){
+                        var temp = s.split("=");
+                        result[decodeURIComponent(temp[0])] = decodeURIComponent(temp[1]);
+                    });
+                }
+                return result;
             }
 
-            var gate = document.querySelector('.ageGate form');
-            gate.birthDate.addEventListener("change", function(e){
-                gate.querySelector("[type=submit]").disabled = isNaN(new Date(e.target.value));
-            });
+            function appendQs(url, key, val){
+                var temp = url.split('?');
+                var root = temp[0];
+                var qs = temp[1];
+                var obj = parseQs(qs || '');
+                obj[key] = val;
+                return root + '?' + $.param(obj);
+            }
 
-            gate.addEventListener("submit", function(e){
-                e.preventDefault();
-                e.stopPropagation();
-                var form = e.target;
-                var birthDate = new Date(form.birthDate.value);
-                var age = getAge(birthDate);
-                var result = age < 21 ? 'failure' : 'success';
-                window.location = appendQs(window.location.href, 'result', result);
-            });
-        })();
-    </script>
+            function onFailedAgeGate(){
+                // maybe show alert here -- maybe show custom view with OK button.
+                $youreYoungModal.show();
+                $('body').addClass('modal-container-open');
+                $btnTooYoung.on('click', function(e){
+                    e.preventDefault();
+                    $youreYoungModal.hide();
+                    $('body').removeClass('modal-container-open');
+                    window.location = appendQs(window.location.href, 'result', 'failure');
+                });
+            }
+
+            function onPassedAgeGate(){
+                window.location = appendQs(window.location.href, 'result', 'success');
+            }
+
+            function checkAge(birthDate){
+                if(getAge(birthDate) < 21){
+                    onFailedAgeGate();
+                } else {
+                    onPassedAgeGate();
+                }
+            }
+
+
+        });
+    });
+</script>
 </body>
 </html>
-
-
