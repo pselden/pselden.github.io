@@ -132,6 +132,11 @@ button[disabled] {
     cursor:default;
 }
 
+#datePicker {
+    opacity: 0;
+    position: absolute;
+}
+
 .legal-text {
     margin-top: 1em;
 }
@@ -309,6 +314,7 @@ body.modal-container-open {
             </div>
         </div>
         <button type="submit" disabled data-text-disabled="Enter your birthdate" data-text-enabled="Enter">Enter your birthdate</button>
+        <input id="datePicker" type="date" name="date" />
     </form>
 
     <div class="legal-text">
@@ -329,12 +335,14 @@ body.modal-container-open {
     <script type="text/javascript">
         $(function(){
             var $form = $('#age-gate-form'),
-                    $submit = $form.find('button[type=submit]'),
-                    $month = $('#month'),
-                    $day = $('#day'),
-                    $year = $('#year'),
-                    $btnTooYoung = $('#not-old-enough'),
-                    $youreYoungModal = $('#horrible-age');
+                $submit = $form.find('button[type=submit]'),
+                $month = $('#month'),
+                $day = $('#day'),
+                $year = $('#year'),
+                $btnTooYoung = $('#not-old-enough'),
+                $youreYoungModal = $('#horrible-age'),
+                $datePicker = $('#datePicker'),
+                isDateSupported = checkIfDateSupported();
 
 
             $form.on('submit', function(e){
@@ -346,8 +354,40 @@ body.modal-container-open {
                 }
             });
 
-            $form.find('input[type=number]').on('blur change', onChange).on('keypress', validateNumberInput);
+            $form.find('input[type=number]').on('focus click', openDatePicker).on('blur change', onChange).on('keypress', validateNumberInput);
             setInterval(onChange, 500); // for browsers that do not support change event, poll for changes
+            if(isDateSupported){
+                setInterval(onDatePickerChange, 500);
+                $datePicker.on('blur change', onDatePickerChange);
+            }
+
+            var prevValue = null;
+            function onDatePickerChange(){
+                var dateStr = $datePicker.val();
+                if(dateStr !== prevValue){
+                    prevValue = dateStr;
+                    var date = new Date(dateStr);
+                    $year.val(date.getUTCFullYear());
+                    $month.val(date.getUTCMonth() + 1);
+                    $day.val(date.getUTCDate());
+                }
+            }
+
+            function openDatePicker(){
+                if(isDateSupported){
+                    $datePicker.focus().click();
+                    return false;
+                }
+
+                return true;
+            }
+
+            function checkIfDateSupported() {
+                var el = document.createElement('input'), notADateValue = 'not-a-date';
+                el.setAttribute('type','date');
+                el.setAttribute('value', notADateValue);
+                return !(el.value === notADateValue);
+            }
 
             function onChange(){
                 var birthDate = getBirthDate();
