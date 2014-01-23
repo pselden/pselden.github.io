@@ -375,8 +375,9 @@ body.modal-container-open {
 
             function openDatePicker(){
                 if(isDateSupported){
+                    e.preventDefault();
+                    e.stopPropagation();
                     $datePicker.click();
-                    return false;
                 }
 
                 return true;
