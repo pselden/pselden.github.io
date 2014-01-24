@@ -329,22 +329,10 @@ body.modal-container-open {
     <script type="text/javascript">
         $(function(){
 
-            // fixes number placeholder not working in older versions of android
-            function numberShim(){
-                var numbers = document.querySelectorAll('input[type=number]');
-                for(var i = 0; i < numbers.length; ++i){
-                    var number = numbers[i];
-                    number.type = 'text';
-                    number.addEventListener('focus', function(){
-                        this.type = 'number';
-                    }, true);
-                    number.addEventListener('blur', function(){
-                        this.type = 'text';
-                    }, true);
-                }
+            var qs = parseQs(window.location.href.split('?')[1] || '');
+            if(qs.source === 'android'){
+                numberShim();
             }
-
-            numberShim();
 
             var $form = $('#age-gate-form'),
                 $submit = $form.find('button[type=submit]'),
@@ -457,6 +445,21 @@ body.modal-container-open {
                     return date;
                 } else {
                     return null;
+                }
+            }
+
+            // fixes number placeholder not working in older versions of android
+            function numberShim(){
+                var numbers = document.querySelectorAll('input[type=number]');
+                for(var i = 0; i < numbers.length; ++i){
+                    var number = numbers[i];
+                    number.type = 'text';
+                    number.addEventListener('focus', function(){
+                        this.type = 'number';
+                    }, true);
+                    number.addEventListener('blur', function(){
+                        this.type = 'text';
+                    }, true);
                 }
             }
         });
