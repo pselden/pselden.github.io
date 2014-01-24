@@ -331,7 +331,9 @@ body.modal-container-open {
 
             // fixes number placeholder not working in older versions of android
             function numberShim(){
-                document.querySelectorAll('input[type=number]').forEach(function(number){
+                var numbers = document.querySelectorAll('input[type=number]');
+                for(var i = 0; i < numbers.length; ++i){
+                    var number = numbers[i];
                     number.type = 'text';
                     number.addEventListener('focus', function(){
                         this.type = 'number';
@@ -339,8 +341,7 @@ body.modal-container-open {
                     number.addEventListener('blur', function(){
                         this.type = 'text';
                     }, true);
-                });
-
+                }
             }
 
             numberShim();
