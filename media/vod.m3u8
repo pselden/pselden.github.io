@@ -1,0 +1,16 @@
+#EXTM3U
+#EXT-X-TARGETDURATION:10
+#EXT-X-ALLOW-CACHE:YES
+#EXT-X-VERSION:3
+#EXT-X-MEDIA-SEQUENCE:1
+#EXTINF:10.0,
+http://axsodhd-vh.akamaihd.net/i/TrendworthyCover_20131009_,300k,1000k,2000k,.mp4.csmil/segment1_0_a.ts
+#EXTINF:10.0,
+http://axsodhd-vh.akamaihd.net/i/TrendworthyCover_20131009_,300k,1000k,2000k,.mp4.csmil/segment2_0_a.ts
+#EXTINF:10.0,
+http://axsodhd-vh.akamaihd.net/i/TrendworthyCover_20131009_,300k,1000k,2000k,.mp4.csmil/segment3_0_a.ts
+#EXTINF:10.0,
+http://axsodhd-vh.akamaihd.net/i/TrendworthyCover_20131009_,300k,1000k,2000k,.mp4.csmil/segment4_0_a.ts
+#EXTINF:9.0,
+http://axsodhd-vh.akamaihd.net/i/TrendworthyCover_20131009_,300k,1000k,2000k,.mp4.csmil/segment5_0_a.ts
+#EXT-X-ENDLIST
